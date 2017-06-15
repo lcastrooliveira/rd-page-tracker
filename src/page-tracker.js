@@ -24,6 +24,14 @@
     }
   };
 
+  pageTracker.findUrlEntry = function(search_url) {
+    tracker = pageTracker.findOrCreatePageTracker();
+    search_criteria = function(entry) {
+      return entry.url == search_url;
+    };
+    return tracker.pages.filter(search_criteria).shift();
+  };
+
   pageTracker.createUrlEntry = function(current_url) {
     current_url = current_url || window.location.pathname;
     tracker = pageTracker.findOrCreatePageTracker();
@@ -41,14 +49,6 @@
     }
     localStorage.setItem('rdPageTracker', JSON.stringify(tracker));
     return tracker;
-  };
-
-  pageTracker.findUrlEntry = function(search_url) {
-    tracker = pageTracker.findOrCreatePageTracker();
-    search_criteria = function(entry) {
-      return entry.url == search_url;
-    };
-    return tracker.pages.filter(search_criteria).shift();
   };
 
   pageTracker.eraseTracker = function() {
